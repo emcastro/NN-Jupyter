@@ -1,7 +1,8 @@
 from google.cloud import storage
 
-def mk_blob_to_GCS(target_name):
-    gcs = storage.Client() # put credentials into GOOGLE_APPLICATION_CREDENTIALS
+
+def mk_blob_to_GCS(target_name: str) -> storage.Blob:
+    gcs = storage.Client()  # put credentials into GOOGLE_APPLICATION_CREDENTIALS
 
     bucket = gcs.get_bucket(gcs.project)
 
