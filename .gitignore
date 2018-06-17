@@ -2,3 +2,4 @@ __pycache__
 *-checkpoint.ipynb
 .mypy_cache
 .vscode
+*-action.log
