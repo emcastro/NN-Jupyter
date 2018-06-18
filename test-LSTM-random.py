@@ -7,7 +7,7 @@ from LSTMAutoencoder import *
 from typing import Mapping, Dict
 
 # Constants
-def action(batch_num, hidden_num, step_num, elem_num, iteration) -> Dict[str, pd.DataFrame]:
+def action(batch_num, hidden_num, step_num, elem_num, iteration, use_peepholes) -> Dict[str, pd.DataFrame]:
 
     tf.reset_default_graph()
     tf.set_random_seed(2016)
@@ -17,7 +17,7 @@ def action(batch_num, hidden_num, step_num, elem_num, iteration) -> Dict[str, pd
     p_input = tf.placeholder(tf.float32, shape=(batch_num, step_num, elem_num))
     p_inputs = [tf.squeeze(t, [1]) for t in tf.split(p_input, step_num, 1)]
 
-    cell = tf.nn.rnn_cell.LSTMCell(hidden_num, use_peepholes=True)
+    cell = tf.nn.rnn_cell.LSTMCell(hidden_num, use_peepholes=use_peepholes)
     ae = LSTMAutoencoder(hidden_num, p_inputs, cell=cell, decode_without_input=True)
 
     with tf.Session() as sess:
@@ -53,13 +53,14 @@ def action(batch_num, hidden_num, step_num, elem_num, iteration) -> Dict[str, pd
 
 # batch_num=128, hidden_num=12, step_num=8, elem_num=1, iteration=10000
 params = [
-    (batch_num, hidden_num, step_num, elem_num, iteration)
+    (batch_num, hidden_num, step_num, elem_num, iteration, use_peepholes)
     for batch_num in [128]
     for hidden_num in [12]
     for step_num in [8]
     for elem_num in [1]
     #    for iteration in [10000]
     for iteration in [1,2]
+    for use_peepholes in [True, False]
 ]
 
-hyperparam.run(params, action, 'lstm-random', use_gcs=True, reset=True)
+hyperparam.run(params, action, 'lstm-random', use_gcs=True, reset=False)
