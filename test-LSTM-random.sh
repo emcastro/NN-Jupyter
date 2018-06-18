@@ -1,3 +1,3 @@
-nohup python test-LSTM-random.py > test-LSTM-random.alsa_out
+nohup python3 test-LSTM-random.py > test-LSTM-random.out
 
 sudo shutdown now

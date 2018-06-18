@@ -55,11 +55,10 @@ def action(batch_num, hidden_num, step_num, elem_num, iteration, use_peepholes) 
 params = [
     (batch_num, hidden_num, step_num, elem_num, iteration, use_peepholes)
     for batch_num in [128]
-    for hidden_num in [12]
+    for hidden_num in [12,1,4,6,24]
     for step_num in [8]
     for elem_num in [1]
-    #    for iteration in [10000]
-    for iteration in [1,2]
+    for iteration in [10000]
     for use_peepholes in [True, False]
 ]
 
