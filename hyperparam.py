@@ -41,7 +41,11 @@ def run(
             continue
 
         # compute the action
-        dfs: Dict[str, pd.DataFrame] = action(*params)
+        try:
+            dfs: Dict[str, pd.DataFrame] = action(*params)
+        except Exception as e:
+            print(e)
+            continue
 
         assert type(dfs) == dict, f"action '{action.__name__}' must return a dict"
 
