@@ -39,7 +39,7 @@ def action(batch_num, hidden_num, step_num, elem_num, iteration, use_peepholes) 
 
             (loss_val, _) = sess.run([ae.loss, ae.train], {p_input: random_sequences})
             #print('iter %d:' % (i + 1), loss_val)
-            loss_vals.append([i, loss_val])
+            loss_vals.append(loss_val)
 
         (input_, output_) = sess.run([ae.input_, ae.output_], {p_input: r + d})
         # print('train result :')
@@ -49,12 +49,16 @@ def action(batch_num, hidden_num, step_num, elem_num, iteration, use_peepholes) 
         result_input = input_[0, :, :].flatten()
         result_output = output_[0, :, :].flatten()
 
-        result = pd.DataFrame({
-            'i': np.arange(len(result_input)),
+        result_df = pd.DataFrame({
+            'i': np.arange(len(result_input),dtype='int32'),
             'input': result_input,
             'output': result_output
         })
-        return { 'result': result, 'loss_val': pd.DataFrame(np.array(loss_vals), columns=['i','loss'])}
+        loss_df = pd.DataFrame({
+            'i': range(len(loss_vals)),
+            'loss': loss_vals
+        })
+        return { 'result': result_df, 'loss_val': loss_df}
 
 # batch_num=128, hidden_num=12, step_num=8, elem_num=1, iteration=10000
 params = [
