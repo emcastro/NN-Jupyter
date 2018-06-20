@@ -56,8 +56,8 @@ params = [
     (batch_num, hidden_num, step_num, elem_num, iteration, use_peepholes)
     for batch_num in [128]
     for hidden_num in [12,1,4,6,24]
-    for step_num in [8]
-    for elem_num in [1]
+    for step_num in [8,16,32,64]
+    for elem_num in [1,2,4,10]
     for iteration in [10000]
     for use_peepholes in [True, False]
 ]
