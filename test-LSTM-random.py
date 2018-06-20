@@ -45,9 +45,14 @@ def action(batch_num, hidden_num, step_num, elem_num, iteration, use_peepholes) 
         # print('train result :')
         # print('input :', input_[0, :, :].flatten())
         # print('output :', output_[0, :, :].flatten())
+
+        result_input = input_[0, :, :].flatten()
+        result_output = output_[0, :, :].flatten()
+
         result = pd.DataFrame({
-            'input': input_[0, :, :].flatten(), 
-            'output': output_[0, :, :].flatten()
+            'i': np.arange(len(result_input)),
+            'input': result_input,
+            'output': result_output
         })
         return { 'result': result, 'loss_val': pd.DataFrame(np.array(loss_vals), columns=['i','loss'])}
 
