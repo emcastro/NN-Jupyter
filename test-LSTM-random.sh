@@ -18,7 +18,7 @@ LOG=$BASE.out
 nohup $PYTHON $BASE.py > $LOG
 
 # Copy log to storage
-gsutil cp -p "$LOG" "gs://$PROJECT_ID/$BASE/`date -Iseconds`.log"
+gsutil cp "$LOG" "gs://$PROJECT_ID/$BASE/`date -Iseconds`.log"
 
 # Bye
 sudo shutdown +2 # give a little time to cancel using: sudo shutdown -c
