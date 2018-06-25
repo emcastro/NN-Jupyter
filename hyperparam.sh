@@ -1,5 +1,10 @@
 #!/bin/bash
-BASE=test-LSTM-random
+BASE=$1
+
+if [[ $BASE = '' ]] ; then
+  echo "usage: $0 BASE"
+  exit 1
+fi
 
 # Try python3 if python is python2
 if [[ `python --version 2>&1` = Python\ 2.7.* ]]

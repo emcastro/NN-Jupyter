@@ -7,23 +7,25 @@ import time
 from urllib.parse import quote
 from pathlib import Path
 import inspect
+import os
 
 R = Random(421)
 
 T = TypeVar('T', bound=tuple)  # Declare type variable
 
+def has_gcloud_credential():
+    return bool(os.environ.get('GOOGLE_APPLICATION_CREDENTIALS', default='').strip())
 
 def run(
         paramSets: Iterable[T],  # 
         action: Callable[..., Dict[str, pd.DataFrame]],
         target: str,
-        log_prefix='hyperparam-',
-        use_gcs=False,
+        use_gcs=has_gcloud_credential(),
         reset=False):
 
     BASE = Path(target)
 
-    log_file_name = Path(log_prefix + action.__name__ + '.log')
+    log_file_name = Path(target + '.log')
 
     if log_file_name.exists() and not reset:
         with open(log_file_name) as log_file:
